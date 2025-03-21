@@ -5,25 +5,10 @@ services:
     build: .
     container_name: backend
     ports:
-      - "5000:5000" 
-    depends_on:
-      - postgres  
+      - "5000:5000"
     environment:
-      DATABASE_URL: postgresql://admin:hElMyhLhoQeZayQPCHAe7if0Uc1kOJwV@dpg-cvel4vpc1ekc73eg9r7g-a/render_734j
+      DATABASE_URL: postgresql://admin:hElMyhLhoQeZayQPCHAe7if0Uc1kOJwV@dpg-cvel4vpc1ekc73eg9r7g-a.oregon-postgres.render.com/render_734j
       PORT: 5000
-
-  postgres:
-    image: postgres:latest
-    container_name: postgres_db
-    restart: always
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: render
-    ports:
-      - "5433:5432" 
-    volumes:
-      - pgdata:/var/lib/postgresql/data  
 
 volumes:
   pgdata:
