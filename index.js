@@ -9,13 +9,13 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cors());
 
-// PostgreSQL connection
+// PostgreSQL connection with SSL always enabled for production
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: process.env.NODE_ENV === 'production' 
-      ? { rejectUnauthorized: false } 
-      : false
-  });
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, // In production, this disables certificate validation
+  }
+});
 
 // Check DB Connection
 (async () => {
@@ -45,8 +45,9 @@ app.post("/users", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-app.get("/",(req,res)=>{
-    res.send("Hello World");
-})
+
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
